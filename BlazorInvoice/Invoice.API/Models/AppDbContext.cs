@@ -1,5 +1,6 @@
 ﻿using Invoice.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Xml;
 
 namespace Invoice.API.Models
 {
@@ -19,6 +20,7 @@ namespace Invoice.API.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.SeedState();
         }
     }
 }
