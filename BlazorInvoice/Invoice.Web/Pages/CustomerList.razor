@@ -1,0 +1,20 @@
+﻿@page "/"
+@inherits CustomerListBase
+<h3>Customer List</h3>
+
+
+@if (Customers == null)
+{ <p> Loading .... .... . . .. . . . . . . ..  . </p>}
+else {<table>
+</table>
+@foreach (var c in Customers)
+{
+    <tr>
+        <td>@c.Name</td>
+        <td>@c.Address</td>
+        <td>@c.GstNumber</td>
+        <td></td>
+    </tr>
+}
+
+}

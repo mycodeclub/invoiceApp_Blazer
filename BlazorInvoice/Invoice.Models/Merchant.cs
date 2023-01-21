@@ -1,0 +1,26 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Invoice.Models
+{
+    public class Merchant
+    {
+//        [Key]
+        public int UniqueId { get; set; }
+
+        public string OrgName { get; set; }
+        public string OrgLogoUri { get; set; }
+
+        public string Address { get; set; }
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public string Mobile1 { get; set; }
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public string Mobile2 { get; set; }
+        public string EmailId { get; set; }
+        public string GstNumber { get; set; }
+
+        // ------------------payment....
+        public BankAccountInfo AccountDetails { get; set; }
+
+
+    }
+}
