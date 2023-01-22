@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoice.Models", "Invoice.Models\Invoice.Models.csproj", "{04875908-0176-4211-9A0A-CA41D41CDD4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Models", "Invoice.Models\Invoice.Models.csproj", "{04875908-0176-4211-9A0A-CA41D41CDD4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoice.Web", "Invoice.Web\Invoice.Web.csproj", "{9BB97942-0A13-4AF9-9129-FF403383DDE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Web", "Invoice.Web\Invoice.Web.csproj", "{9BB97942-0A13-4AF9-9129-FF403383DDE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoice.API", "Invoice.API\Invoice.API.csproj", "{CB5091B9-18AB-4FEA-8EBA-9095716F6FD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.API", "Invoice.API\Invoice.API.csproj", "{CB5091B9-18AB-4FEA-8EBA-9095716F6FD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

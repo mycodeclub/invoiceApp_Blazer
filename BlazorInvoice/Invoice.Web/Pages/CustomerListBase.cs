@@ -9,7 +9,7 @@ namespace Invoice.Web.Pages
         public List<Invoice.Models.Customer> Customers { get; set; }
         List<Invoice.Models.Customer> GetCustomers()
         {
-            System.Threading.Thread.Sleep(5000);
+            // System.Threading.Thread.Sleep(5000);
             if (Customers == null)
             {
                 Customers = new List<Models.Customer>() { };
