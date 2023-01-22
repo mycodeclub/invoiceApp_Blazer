@@ -24,7 +24,13 @@ namespace Invoice.Models
         public decimal UnitPrice { get; set; }
         public decimal UnitCounts { get; set; }
         [NotMapped]
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice
+        {
+            get
+            {
+                return (UnitPrice * UnitCounts);
+            }
+        }
 
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }

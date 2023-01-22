@@ -1,4 +1,5 @@
-﻿@page "/CreateInvoice"
+﻿@page "/"
+@page "/CreateInvoice"
 <h3>Create Invoice</h3>
 <div class="card">
     <div class="card-body">
@@ -31,11 +32,10 @@
                 <div class="row">
                     <div class="col-xl-8">
                         <ul class="list-unstyled">
-                            <li class="text-muted">To: <span style="color:#5d9fc5 ;">John Lorem</span></li>
-                            <li class="text-muted">Street, City</li>
-                            <li class="text-muted">State, Country</li>
-                            <li class="text-muted"><i class="fas fa-phone"></i> 123-456-789</li>
-                            <li> <button  class="btn btn-warning"> Edit </button></li>
+                            <li class="text-muted"> To: </li>
+                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Name" class="form-control" placeholder="Customer Name">                      </li>
+                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Address" class="form-control" placeholder="Address">                            </li>
+                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Mobile1" class="form-control" placeholder="Mobile Number">                            </li>
                         </ul>
                     </div>
                     <div class="col-xl-4">
@@ -61,34 +61,24 @@
                         <thead style="background-color:#84B0CA ;" class="text-white">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Item Description</th>
                                 <th scope="col">Qty</th>
                                 <th scope="col">Unit Price</th>
                                 <th scope="col">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Pro Package</td>
-                                <td>4</td>
-                                <td>$200</td>
-                                <td>$800</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Web hosting</td>
-                                <td>1</td>
-                                <td>$10</td>
-                                <td>$10</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Consulting</td>
-                                <td>1 year</td>
-                                <td>$300</td>
-                                <td>$300</td>
-                            </tr>
+                            @for (int i = 0; i < _invoice.Items.Count; i++)
+                            {
+                                var item = _invoice.Items[i];
+                                <tr>
+                                    <td> @(i + 1)  </td>
+                                    <td> <input @bind="item.ProductServiceDescription" type="text" /> </td>
+                                    <td> <input @bind="item.UnitPrice" type="number" /> </td>
+                                    <td> <input @bind="item.UnitCounts" type="number" /> </td>
+                                    <td> @item.TotalPrice </td>
+                                </tr>
+                            }
                         </tbody>
 
                     </table>
@@ -98,14 +88,47 @@
                         <p class="ms-3">Add additional notes and payment information</p>
 
                     </div>
-                    <div class="col-xl-3">
-                        <ul class="list-unstyled">
-                            <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$1110</li>
-                            <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
-                        </ul>
-                        <p class="text-black float-start">
-                            <span class="text-black me-3"> Total Amount</span><span style="font-size: 25px;">$1221</span>
-                        </p>
+                    <div class="col-xl-4">
+
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">Grand Total </label>
+                            <div class="col-sm-4">
+                                <label class="form-control" readonly>@_invoice.GrandTotal</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">Tax % </label>
+                            <div class="col-sm-4">
+                                <input @bind="_invoice.TaxPercentage" class="form-control" placeholder="Tax %" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">Tax Amount</label>
+                            <div class="col-sm-4">
+                                <lable class="form-control" readonly>@_invoice.TaxAmount</lable>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">Discount Amount</label>
+                            <div class="col-sm-4">
+                                <input @bind="_invoice.DiscountAmount" class="form-control" placeholder="Discount Amount" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">Discount % </label>
+                            <div class="col-sm-4">
+                                <label readonly class="form-control"> @_invoice.DiscountPercentage </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">RemainingBalance </label>
+                            <div class="col-sm-4">
+                                <label readonly class="form-control"> @_invoice.RemainingBalance </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr>
