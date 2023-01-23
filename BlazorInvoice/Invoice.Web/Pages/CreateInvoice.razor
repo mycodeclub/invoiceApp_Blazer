@@ -65,6 +65,7 @@
                                 <th scope="col">Qty</th>
                                 <th scope="col">Unit Price</th>
                                 <th scope="col">Amount</th>
+                                <th scope="col"><input type="button" class="btn btn-warning" @onclick="AddNewItem"  value="Add Item"/>  </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,6 +78,7 @@
                                     <td> <input @bind="item.UnitPrice" type="number" /> </td>
                                     <td> <input @bind="item.UnitCounts" type="number" /> </td>
                                     <td> @item.TotalPrice </td>
+                                    <td></td>
                                 </tr>
                             }
                         </tbody>
