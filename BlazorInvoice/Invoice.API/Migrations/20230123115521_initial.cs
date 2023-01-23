@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Invoice.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,12 +53,11 @@ namespace Invoice.API.Migrations
                 name: "Merchants",
                 columns: table => new
                 {
-                    UniqueId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UniqueId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrgName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrgLogoUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mobile1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Mobile1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mobile2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GstNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -80,17 +79,14 @@ namespace Invoice.API.Migrations
                 {
                     UniqueId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MerchantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GrandTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TaxPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BillableAmountAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalPaid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RemainingBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiscountTypeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsBillingCompleted = table.Column<bool>(type: "bit", nullable: false)
@@ -102,6 +98,12 @@ namespace Invoice.API.Migrations
                         name: "FK_Invoices_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
+                        principalColumn: "UniqueId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Merchants_MerchantId",
+                        column: x => x.MerchantId,
+                        principalTable: "Merchants",
                         principalColumn: "UniqueId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -133,7 +135,7 @@ namespace Invoice.API.Migrations
             migrationBuilder.InsertData(
                 table: "Merchants",
                 columns: new[] { "UniqueId", "Address", "BankAccountId", "EmailId", "GstNumber", "Mobile1", "Mobile2", "OrgLogoUri", "OrgName" },
-                values: new object[] { 1, "Indranagar Lucknow", null, "business@computes.com", "00000000987678", "+91-94-1515-1515", "000000000", "https://icon2.cleanpng.com/20180417/gfe/kisspng-laptop-computer-mouse-logo-desktop-computers-pc-5ad5eaf0b32950.1664578815239687527339.jpg", "The Computers Shop" });
+                values: new object[] { new Guid("4c77c0f3-a7f1-45a9-9d43-6f5f6a4a2162"), "Indranagar Lucknow", null, "business@computes.com", "00000000987678", "+91-94-1515-1515", "000000000", "https://icon2.cleanpng.com/20180417/gfe/kisspng-laptop-computer-mouse-logo-desktop-computers-pc-5ad5eaf0b32950.1664578815239687527339.jpg", "The Computers Shop" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_invoiceItems_InvoiceId",
@@ -144,6 +146,11 @@ namespace Invoice.API.Migrations
                 name: "IX_Invoices_CustomerId",
                 table: "Invoices",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_MerchantId",
+                table: "Invoices",
+                column: "MerchantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Merchants_BankAccountId",
@@ -158,16 +165,16 @@ namespace Invoice.API.Migrations
                 name: "invoiceItems");
 
             migrationBuilder.DropTable(
-                name: "Merchants");
-
-            migrationBuilder.DropTable(
                 name: "Invoices");
 
             migrationBuilder.DropTable(
-                name: "BankAccountInfos");
+                name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Merchants");
+
+            migrationBuilder.DropTable(
+                name: "BankAccountInfos");
         }
     }
 }

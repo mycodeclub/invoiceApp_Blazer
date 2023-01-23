@@ -9,7 +9,7 @@ namespace Invoice.API.Models
         {
             modelBuilder.Entity<Invoice.Models.Merchant>().HasData(new Invoice.Models.Merchant()
             {
-                UniqueId = 1,
+                UniqueId = Guid.NewGuid(),
                 OrgName = "The Computers Shop",
                 Address = "Indranagar Lucknow",
                 EmailId = "business@computes.com",

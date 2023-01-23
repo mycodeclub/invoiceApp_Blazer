@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Invoice.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230121072842_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230123115521_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,9 +111,6 @@ namespace Invoice.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniqueId"));
 
-                    b.Property<decimal>("BillableAmountAfterDiscount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -127,15 +124,8 @@ namespace Invoice.API.Migrations
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("DiscountTypeName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("GrandTotal")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
@@ -150,15 +140,17 @@ namespace Invoice.API.Migrations
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("RemainingBalance")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<Guid>("MerchantId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("TotalPaid")
+                    b.Property<decimal>("TaxPercentage")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("UniqueId");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("MerchantId");
 
                     b.ToTable("Invoices");
                 });
@@ -199,11 +191,9 @@ namespace Invoice.API.Migrations
 
             modelBuilder.Entity("Invoice.Models.Merchant", b =>
                 {
-                    b.Property<int>("UniqueId")
+                    b.Property<Guid>("UniqueId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniqueId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -221,7 +211,6 @@ namespace Invoice.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mobile1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mobile2")
@@ -245,7 +234,7 @@ namespace Invoice.API.Migrations
                     b.HasData(
                         new
                         {
-                            UniqueId = 1,
+                            UniqueId = new Guid("4c77c0f3-a7f1-45a9-9d43-6f5f6a4a2162"),
                             Address = "Indranagar Lucknow",
                             EmailId = "business@computes.com",
                             GstNumber = "00000000987678",
@@ -264,7 +253,15 @@ namespace Invoice.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Invoice.Models.Merchant", "Merchant")
+                        .WithMany()
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CustomerInfo");
+
+                    b.Navigation("Merchant");
                 });
 
             modelBuilder.Entity("Invoice.Models.InvoiceItem", b =>

@@ -6,7 +6,7 @@ namespace Invoice.Models
     public class Merchant
     {
         [Key]
-        public int UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
 
         public string OrgName { get; set; }
         public string OrgLogoUri { get; set; }
