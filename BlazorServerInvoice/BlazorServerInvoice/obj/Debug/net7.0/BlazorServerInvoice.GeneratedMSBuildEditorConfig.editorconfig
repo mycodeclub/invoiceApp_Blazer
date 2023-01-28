@@ -12,7 +12,7 @@ build_property.RootNamespace = BlazorServerInvoice
 build_property.ProjectDir = C:\MyData\Projects\GitHub\MyCodeClub\invoiceApp_Blazer\BlazorServerInvoice\BlazorServerInvoice\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\MyData\Projects\GitHub\MyCodeClub\invoiceApp_Blazer\BlazorServerInvoice\BlazorServerInvoice
 build_property._RazorSourceGeneratorDebug = 
 
