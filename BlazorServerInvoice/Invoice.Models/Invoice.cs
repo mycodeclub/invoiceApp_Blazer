@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Invoice.Models
 {
@@ -13,7 +7,6 @@ namespace Invoice.Models
     {
         [Key]
         public int UniqueId { get; set; }
-
         public Guid MerchantId { get; set; }
         [ForeignKey("MerchantId")]
         public Merchant? Merchant { get; set; }
