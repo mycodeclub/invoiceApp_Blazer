@@ -1,33 +1,16 @@
 ﻿@page "/"
-<h3>Create Invoice</h3>
+
 <div class="card">
     <div class="card-body">
         <div class="container mb-5 mt-3">
-            <div class="row d-flex align-items-baseline">
-                @if (_invoice.UniqueId > 0)
-                {
-                    <div class="col-xl-9">
-                        <p style="color: #7e8d9f;font-size: 20px;"> <strong>Invoice ID:# @_invoice.UniqueId </strong></p>
-                    </div>
-                }
-                <div class="col-xl-3 float-end">
-                    <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark">
-                        <i class="fas fa-print text-primary"></i> Print
-                    </a>
-                    <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark">
-                        <i class="far fa-file-pdf text-danger"></i> Export
-                    </a>
-                </div>
-                <hr>
-            </div>
 
             <div class="container">
                 <div class="col-md-12">
                     <div class="text-center">
                         <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
                         <p class="pt-0">BitProSoftTech </p>
+                        <input type="button" class="btn btn-success oi-align-right" value="New Invoice" @onclick="NewInvoice" />
                     </div>
-
                 </div>
 
 
@@ -35,67 +18,53 @@
                     <div class="col-xl-8">
                         <ul class="list-unstyled">
                             <li class="text-muted"> To: </li>
-                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Name" class="form-control" placeholder="Customer Name">                      </li>
-                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Address" class="form-control" placeholder="Address">                            </li>
-                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Mobile1" class="form-control" placeholder="Mobile Number">                            </li>
+                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Name" class="form-control" placeholder="Customer Name"> </li>
+                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Address" class="form-control" placeholder="Address"> </li>
+                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Mobile1" class="form-control" placeholder="Mobile Number"> </li>
                         </ul>
                     </div>
                     <div class="col-xl-4">
                         <p class="text-muted">Invoice</p>
                         <ul class="list-unstyled">
-                            @if (_invoice.UniqueId > 0)
-                            {
-                                <li class="text-muted">
-                                    <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">ID:</span>#@_invoice.UniqueId
-                                </li>
-                            }
-                            <li class="text-muted">
-                                <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Creation Date: </span>@_invoice.CreatedDate.ToString("dd/MMM/yyyy")
-                            </li>
-                            <li class="text-muted">
-                                <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
-                                    Unpaid
-                                </span>
-                            </li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">ID:</span>#@_invoice.InvoiceNo</li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Creation Date: </span>@_invoice.CreatedDate.ToString("dd/MMM/yyyy")</li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">Unpaid</span></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="row my-2 mx-1 justify-content-center">
-                    <table class="table table-striped table-borderless">
+                    <table>
                         <thead style="background-color:#84B0CA ;" class="text-white">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Item Description</th>
-                                <th scope="col">Qty</th>
-                                <th scope="col">Unit Price</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col"><input type="button" class="btn btn-warning" @onclick="AddNewItemRow" value="Add Item" />  </th>
+                                <th style="width:10%" scope="col">S. No.</th>
+                                <th style="width:50%" scope="col">Item Description</th>
+                                <th style="width:10%" scope="col">Qty</th>
+                                <th style="width:10%" scope="col">Unit Price</th>
+                                <th style="width:10%" scope="col">Amount</th>
+                                <th style="width:10%;" scope="col">
+                                    <span id="boot-icon" class="bi bi-plus-circle" @onclick="AddNewItemRow" style="font-size: 24px; color: rgb(0, 128, 55); -webkit-text-stroke-width: 1.6px;"></span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < _invoice.Items.Count; i++)
+                            @foreach (var item in _invoice.Items)
                             {
-                                var item = _invoice.Items[i];
                                 <tr>
-                                    <td> @(i + 1)  </td>
-                                    <td> <input @bind="item.ProductServiceDescription" type="text" /> </td>
-                                    <td> <input @bind="item.UnitPrice" type="number" /> </td>
-                                    <td> <input @bind="item.UnitCounts" type="number" /> </td>
+                                    <td> @item.SNo</td>
+                                    <td> <input style="width:100%" @bind="item.ProductServiceDescription" type="text" /> </td>
+                                    <td> <input style="width:80%; float:right" @bind="item.UnitPrice" type="number" /> </td>
+                                    <td> <input style="width:80%; float:right" @bind="item.UnitCounts" type="number" /> </td>
                                     <td> @item.TotalPrice </td>
-                                    <td></td>
-
+                                    <td > <span id="boot-icon" class="bi bi-trash" @onclick="()=>RemoveItemRow(item.SNo)" style="font-size: 31px; opacity: 0.8; -webkit-text-stroke-width: 0.6px; color: rgb(255, 0, 0);"></span>                              </td>
                                 </tr>
                             }
                         </tbody>
-
                     </table>
                 </div>
                 <div class="row">
                     <div class="col-xl-8">
                         <p class="ms-3">Add additional notes and payment information</p>
-
-
                         <div class="row my-2 mx-1 justify-content-center">
                             <table>
                                 <thead style="background-color:#84B0CA ;" class="text-white">
@@ -104,25 +73,32 @@
                                         <th scope="col"> Date </th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Description</th>
+                                        <th></th>
+                                        <th></th>
                                         <th scope="col"><input type="button" class="btn btn-warning" @onclick="AddNewPaymentRow" value="Add" />  </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < _invoice.Payments.Count; i++)
+                                    @foreach (var pay in _invoice.Payments)
                                     {
-                                        var pay = _invoice.Payments[i];
                                         <tr>
-                                            <td>@(i + 1)</td>
+                                            <td> @pay.SNo</td>
                                             <td>@pay.CreatedDate.ToString("dd/MMM/yyyy")</td>
                                             <td> <input @bind="pay.Description" type="text" /> </td>
                                             <td> <input @bind="pay.ReceivedAmount" type="number" /> </td>
                                             <td>@pay.ReceivedAmount </td>
                                             <td>@pay.Description</td>
+                                            <td>
+                                                <span id="boot-icon" class="bi bi-trash" @onclick="()=>RemovePaymentRow(pay.SNo)" style="font-size: 31px; opacity: 0.8; -webkit-text-stroke-width: 0.6px; color: rgb(255, 0, 0);"></span>
+
+                                                @*                                                <input type="button" class="btn btn-danger" value="Delete" @onclick="()=>RemovePaymentRow(pay.SNo)">*@
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
                                 <tfoot style="background-color:#405a69 ;" class="text-white">
                                     <tr>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -208,4 +184,4 @@
         </div>
     </div>
 </div>
- 
+

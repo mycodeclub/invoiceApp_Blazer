@@ -13,6 +13,9 @@ namespace Invoice.Models
     {
         [Key]
         public int UniqueId { get; set; }
+        
+        [NotMapped]
+        public int SNo { get; set; }
 
         public int InvoiceId { get; set; }
 

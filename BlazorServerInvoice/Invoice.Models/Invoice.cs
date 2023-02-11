@@ -6,7 +6,8 @@ namespace Invoice.Models
     public class Invoice
     {
         [Key]
-        public int UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
+        public int InvoiceNo { get; set; }
         public Guid MerchantId { get; set; }
         [ForeignKey("MerchantId")]
         public Merchant? Merchant { get; set; }
@@ -28,9 +29,11 @@ namespace Invoice.Models
         {
             get
             {
-                return DiscountAmount > 0 ?
-                    ((DiscountAmount / GrandTotal) * 100).ToString("#,0.00") + "%"
-                    : 0.ToString() + "%";
+                return GrandTotal > 0 ?
+                            DiscountAmount > 0 ?
+                                ((DiscountAmount / GrandTotal) * 100).ToString("#,0.00") + "%"
+                                : 0.ToString() + "%"
+                            : "0";
             }
         }
         public string? DiscountTypeName { get; set; }
