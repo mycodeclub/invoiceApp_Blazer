@@ -6,14 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-//using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 
 namespace Invoice.Models.User
 {
-    public class AppUser //: IdentityUser
+    public class AppUser : IdentityUser
     {
-        //[Key]
-        //public override string Id { get; set; }
+        [Key]
+        public override string Id { get; set; }
         public int? AddressId { get; set; }
 
         //[ForeignKey("AddressId")]

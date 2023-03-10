@@ -18,16 +18,16 @@
                     <div class="col-xl-8">
                         <ul class="list-unstyled">
                             <li class="text-muted"> To: </li>
-                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Name" class="form-control" placeholder="Customer Name"> </li>
-                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Address" class="form-control" placeholder="Address"> </li>
-                            <li class="text-muted col-sm-4"> <input @bind="_invoice.CustomerInfo.Mobile1" class="form-control" placeholder="Mobile Number"> </li>
+                            <li class="text-muted col-sm-4"> <input @bind="Data.staticData._invoice.CustomerInfo.Name" class="form-control" placeholder="Customer Name"> </li>
+                            <li class="text-muted col-sm-4"> <input @bind="Data.staticData._invoice.CustomerInfo.Address" class="form-control" placeholder="Address"> </li>
+                            <li class="text-muted col-sm-4"> <input @bind="Data.staticData._invoice.CustomerInfo.Mobile1" class="form-control" placeholder="Mobile Number"> </li>
                         </ul>
                     </div>
                     <div class="col-xl-4">
                         <p class="text-muted">Invoice</p>
                         <ul class="list-unstyled">
-                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">ID:</span>#@_invoice.InvoiceNo</li>
-                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Creation Date: </span>@_invoice.CreatedDate.ToString("dd/MMM/yyyy")</li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">ID:</span>#@Data.staticData._invoice.InvoiceNo</li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Creation Date: </span>@Data.staticData._invoice.CreatedDate.ToString("dd/MMM/yyyy")</li>
                             <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">Unpaid</span></li>
                         </ul>
                     </div>
@@ -48,7 +48,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in _invoice.Items)
+                            @foreach (var item in Data.staticData._invoice.Items)
                             {
                                 <tr>
                                     <td> @item.SNo</td>
@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var pay in _invoice.Payments)
+                                    @foreach (var pay in Data.staticData._invoice.Payments)
                                     {
                                         <tr>
                                             <td> @pay.SNo</td>
@@ -104,7 +104,7 @@
                                         <th></th>
                                         <th></th>
                                         <th>Total Paid: </th>
-                                        <th> @_invoice.TotalPaid</th>
+                                        <th> @Data.staticData._invoice.TotalPaid</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -129,40 +129,40 @@
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label">Grand Total </label>
                             <div class="col-sm-4">
-                                <label class="form-control" readonly>@_invoice.GrandTotal</label>
+                                <label class="form-control" readonly>@Data.staticData._invoice.GrandTotal</label>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label">Tax % </label>
                             <div class="col-sm-4">
-                                <input @bind="_invoice.TaxPercentage" class="form-control" placeholder="Tax %" />
+                                <input @bind="Data.staticData._invoice.TaxPercentage" class="form-control" placeholder="Tax %" />
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label">Tax Amount</label>
                             <div class="col-sm-4">
-                                <lable class="form-control" readonly>@_invoice.TaxAmount</lable>
+                                <lable class="form-control" readonly>@Data.staticData._invoice.TaxAmount</lable>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label">Discount Amount</label>
                             <div class="col-sm-4">
-                                <input @bind="_invoice.DiscountAmount" class="form-control" placeholder="Discount Amount" />
+                                <input @bind="Data.staticData._invoice.DiscountAmount" class="form-control" placeholder="Discount Amount" />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label">Discount % </label>
                             <div class="col-sm-4">
-                                <label readonly class="form-control"> @_invoice.DiscountPercentage </label>
+                                <label readonly class="form-control"> @Data.staticData._invoice.DiscountPercentage </label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label">RemainingBalance </label>
                             <div class="col-sm-4">
-                                <label readonly class="form-control"> @_invoice.RemainingBalance </label>
+                                <label readonly class="form-control"> @Data.staticData._invoice.RemainingBalance </label>
                             </div>
                         </div>
                     </div>
